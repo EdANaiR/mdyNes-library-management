@@ -1,16 +1,16 @@
 export const postAPI = async (
-  URL,
+  url, // Changed from URL to url
   body,
   method = "POST",
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    if (!process.env.NEXT_PUBLIC_API_URL && !URL.startsWith("/api")) {
+    if (!process.env.NEXT_PUBLIC_API_URL && !url.startsWith("/api")) {
       throw new Error("URL bulunamadı!");
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
-    const fullUrl = URL.startsWith("/api") ? URL : `${baseUrl + URL}`;
+    const fullUrl = url.startsWith("/api") ? url : `${baseUrl}${url}`;
 
     console.log("API isteği gönderiliyor:", fullUrl);
 
@@ -42,11 +42,13 @@ export const postAPI = async (
 };
 
 export const getAPI = async (
-  URL,
+  url, // Changed parameter name from URL to url
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    const fullUrl = URL.startsWith("http") ? URL : URL;
+    // Fix the URL handling
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+    const fullUrl = url.startsWith("http") ? url : `${baseUrl}${url}`;
 
     console.log("GET isteği gönderiliyor:", fullUrl);
 
@@ -54,7 +56,6 @@ export const getAPI = async (
       method: "GET",
       headers: headers,
       cache: "no-store",
-
       next: { revalidate: 0 },
     });
 
