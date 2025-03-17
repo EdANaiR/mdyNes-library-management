@@ -25,7 +25,7 @@ export default function BookActions({ book }) {
 
   const handleEdit = () => {
     setEditingBook(book);
-    router.push(`api/books/edit-book/${book.id}`);
+    router.push(`/api/books/edit-book/${book.id}`);
   };
 
   const handleView = () => {
