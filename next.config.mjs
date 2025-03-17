@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
+  experimental: {
+    // Your existing experimental options
+    serverComponentsExternalPackages: ["@prisma/client", "prisma"],
+  },
   images: {
     domains: [
       "img.kitapyurdu.com",
@@ -7,7 +12,6 @@ const nextConfig = {
       "i.dr.com.tr",
       "cdn.idefix.com",
       "images-na.ssl-images-amazon.com",
-      // Kitap kapağı URL'lerinin gelebileceği diğer domainler
     ],
   },
 };

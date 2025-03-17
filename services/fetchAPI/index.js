@@ -1,11 +1,11 @@
 export const postAPI = async (
-  URL,
+  url,
   body,
   method = "POST",
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    const fullUrl = URL.startsWith("/api") ? URL : `/api${URL}`;
+    const fullUrl = url.startsWith("/api") ? url : `/api${url}`;
 
     console.log("API isteği gönderiliyor:", fullUrl);
 
@@ -30,11 +30,11 @@ export const postAPI = async (
 };
 
 export const getAPI = async (
-  URL,
+  url,
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    const fullUrl = URL.startsWith("/api") ? URL : `/api${URL}`;
+    const fullUrl = url.startsWith("/api") ? url : `/api${url}`;
 
     console.log("GET isteği gönderiliyor:", fullUrl);
 
