@@ -5,7 +5,12 @@ export const postAPI = async (
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    const fullUrl = url.startsWith("/api") ? url : `/api${url}`;
+    // Get the base URL based on environment
+    const baseUrl = getBaseUrl();
+    // Create absolute URL
+    const fullUrl = url.startsWith("/api")
+      ? `${baseUrl}${url}`
+      : `${baseUrl}/api${url}`;
 
     console.log("API isteği gönderiliyor:", fullUrl);
 
@@ -16,6 +21,7 @@ export const postAPI = async (
       cache: "no-store",
     });
 
+    // Rest of your function remains the same
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`API yanıt hatası: ${response.status} - ${errorText}`);
@@ -34,7 +40,12 @@ export const getAPI = async (
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    const fullUrl = url.startsWith("/api") ? url : `/api${url}`;
+    // Get the base URL based on environment
+    const baseUrl = getBaseUrl();
+    // Create absolute URL
+    const fullUrl = url.startsWith("/api")
+      ? `${baseUrl}${url}`
+      : `${baseUrl}/api${url}`;
 
     console.log("GET isteği gönderiliyor:", fullUrl);
 
@@ -44,6 +55,7 @@ export const getAPI = async (
       cache: "no-store",
     });
 
+    // Rest of your function remains the same
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`API yanıt hatası: ${response.status} - ${errorText}`);
@@ -57,3 +69,20 @@ export const getAPI = async (
     throw new Error(`API request failed: ${err.message}`);
   }
 };
+
+// Helper function to get the base URL
+function getBaseUrl() {
+  if (typeof window !== "undefined") {
+    // Browser environment
+    return window.location.origin;
+  }
+
+  // Server environment
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) {
+    return `https://${vercelUrl}`;
+  }
+
+  // Local development
+  return "http://localhost:3000";
+}
