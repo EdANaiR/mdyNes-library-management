@@ -1,5 +1,5 @@
 export const postAPI = async (
-  url, // Changed from URL to url
+  url, // URL yerine url kullanın
   body,
   method = "POST",
   headers = { "Content-Type": "application/json" }
@@ -42,11 +42,11 @@ export const postAPI = async (
 };
 
 export const getAPI = async (
-  url, // Changed parameter name from URL to url
+  url, // URL yerine url kullanın
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    // Fix the URL handling
+    // URL oluşturma mantığını düzeltin
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
     const fullUrl = url.startsWith("http") ? url : `${baseUrl}${url}`;
 
