@@ -46,13 +46,7 @@ export const getAPI = async (
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    let fullUrl;
-
-    if (typeof window === "undefined") {
-      fullUrl = URL;
-    } else {
-      fullUrl = URL;
-    }
+    const fullUrl = URL.startsWith("http") ? URL : URL;
 
     console.log("GET isteği gönderiliyor:", fullUrl);
 
@@ -60,6 +54,8 @@ export const getAPI = async (
       method: "GET",
       headers: headers,
       cache: "no-store",
+
+      next: { revalidate: 0 },
     });
 
     if (!response.ok) {
