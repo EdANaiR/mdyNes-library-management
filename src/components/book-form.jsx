@@ -70,7 +70,6 @@ export default function BookForm({ initialData }) {
       setIsSubmitting(true);
 
       if (bookData?.id) {
-        // Güncelleme işlemi
         await postAPI(`/api/books/${bookData.id}`, values, "PUT");
       } else {
         // Yeni kitap ekleme
