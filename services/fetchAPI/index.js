@@ -5,12 +5,7 @@ export const postAPI = async (
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    if (!process.env.NEXT_PUBLIC_API_URL && !URL.startsWith("/api")) {
-      throw new Error("URL bulunamadı!");
-    }
-
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
-    const fullUrl = URL.startsWith("/api") ? URL : `${baseUrl + URL}`;
+    const fullUrl = URL.startsWith("/api") ? URL : `/api${URL}`;
 
     console.log("API isteği gönderiliyor:", fullUrl);
 
@@ -26,13 +21,6 @@ export const postAPI = async (
       throw new Error(`API yanıt hatası: ${response.status} - ${errorText}`);
     }
 
-    if (response.url.includes("/notification") && response.redirected) {
-      if (typeof window !== "undefined") {
-        window.location.href = response.url;
-        return null;
-      }
-    }
-
     const data = await response.json();
     return data;
   } catch (err) {
@@ -46,16 +34,7 @@ export const getAPI = async (
   headers = { "Content-Type": "application/json" }
 ) => {
   try {
-    let fullUrl;
-
-    if (typeof window === "undefined") {
-      const protocol =
-        process.env.NODE_ENV === "development" ? "http" : "https";
-      const host = process.env.VERCEL_URL || "localhost:3000";
-      fullUrl = `${protocol}://${host}${URL}`;
-    } else {
-      fullUrl = URL;
-    }
+    const fullUrl = URL.startsWith("/api") ? URL : `/api${URL}`;
 
     console.log("GET isteği gönderiliyor:", fullUrl);
 
