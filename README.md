@@ -45,7 +45,7 @@ export default getBaseUrl;
 
 ## Proje Yapısı
 
-```
+
 📦 LIBRARY-APP  
 │── 📂 .next                 # Next.js tarafından oluşturulan derleme dosyaları  
 │── 📂 node_modules          # Proje bağımlılıkları  
@@ -105,9 +105,6 @@ export default getBaseUrl;
 │── 📄 Readme.md 
 │── 📄 tailwind.config.js
 ```
-
-
-
 
 
 ## Mimari Açıklaması
