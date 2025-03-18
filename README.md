@@ -1,71 +1,109 @@
+### MDyNes Kütüphane Yönetim Sistemi
+
+Bu proje, modern web teknolojileri kullanılarak geliştirilmiş kapsamlı bir kütüphane yönetim sistemidir.
+
+
+# Bağımlılıkları yükleyin
+npm install
+
+# Geliştirme sunucusunu başlatın
+npm run dev
+
+## Yardımcı Fonksiyonlar
+
+### Base URL Belirleme
+
+Proje, farklı ortamlarda (geliştirme, production) doğru API endpoint'lerini kullanabilmek için bir `getBaseUrl()` yardımcı fonksiyonu içerir:
+
+```javascript
+// utils/baseUrl.js
+
+/**
+ * Uygulama ortamına göre temel URL'yi belirleyen yardımcı fonksiyon
+ * @returns {string} Temel URL
+ */
+function getBaseUrl() {
+  if (typeof window !== "undefined") {
+    // Tarayıcı ortamı
+    return window.location.origin;
+  }
+
+  // Sunucu ortamı
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) {
+    return `https://${vercelUrl}`;
+  }
+
+  // Yerel geliştirme
+  return "http://localhost:3000";
+}
+
+export default getBaseUrl;
+
+
+
+
 ## Proje Yapısı
 
 ```
-mdyNes-library-management/
-│
-├── app/                          
-│   ├── api/                      # API rotaları
-│   │   ├── books/                # Kitap API'leri
-│   │   │   ├── [id]/            # Belirli bir kitap için API rotaları (GET, PUT, DELETE)
-│   │   │   │   └── route.js
-│   │   │   └── route.js         # Tüm kitaplar için API rotaları (GET, POST)
-│   │   └── ...                   # Diğer API rotaları
-│   │
-│   ├── books/                    # Kitap sayfaları
-│   │   ├── [id]/                 # Kitap detay sayfası
-│   │   │   └── page.jsx
-│   │   ├── edit/                 # Kitap düzenleme sayfaları
-│   │   │   └── [id]/
-│   │   │       └── page.jsx
-│   │   └── page.jsx              # Tüm kitaplar sayfası
-│   │
-│   ├── globals.css               # Global CSS stilleri
-│   ├── layout.jsx                # Ana uygulama layout'u
-│   └── page.jsx                  # Ana sayfa
-│
-├── components/                   # React bileşenleri
-│   ├── book-detail/              # Kitap detay bileşenleri
-│   │   ├── book-detail-header.jsx
-│   │   ├── book-detail-image.jsx
-│   │   ├── book-detail-info.jsx
-│   │   └── related-books.jsx
-│   │
-│   ├── ui/                       # UI bileşenleri (shadcn/ui)
-│   │   ├── alert-dialog.jsx
-│   │   ├── button.jsx
-│   │   ├── separator.jsx
-│   │   └── ...
-│   │
-│   ├── book-actions.jsx          # Kitap işlemleri bileşeni
-│   ├── book-form.jsx             # Kitap ekleme/düzenleme formu
-│   ├── book-grid.jsx             # Kitap grid görünümü
-│   ├── book-list.jsx             # Kitap liste görünümü
-│   ├── header.jsx                # Sayfa başlığı
-│   └── ...
-│
-├── prisma/                       # Prisma ORM yapılandırması
-│   ├── schema.prisma             # Veritabanı şeması
-│   └── ...
-│
-├── public/                       
-│   ├── images/                 
-│   └── ...
-│
-├── services/                     # Servis katmanı
-│   ├── fetchAPI.js               # API istekleri için yardımcı fonksiyonlar
-│   └── serviceOperations/        # Veritabanı işlemleri
-│       └── index.js              # CRUD operasyonları
-│
-├── utils/                        # Yardımcı fonksiyonlar ve araçlar
-│   ├── store.js                  # Zustand durum yönetimi
-│   └── ...
-│
-├── .env                         
-├── .gitignore                    
-├── next.config.js               
-├── package.json                  
-├── tailwind.config.js            
-└── README.md        
+📦 LIBRARY-APP  
+│── 📂 .next                 # Next.js tarafından oluşturulan derleme dosyaları  
+│── 📂 node_modules          # Proje bağımlılıkları  
+│── 📂 prisma                # Prisma ORM yapılandırmaları  
+│   ├── 📄 schema.prisma     # Prisma şema dosyası  
+│── 📂 public                # Genel statik dosyalar (görseller vb.)  
+│── 📂 services              # API servisleri ve iş mantığı  
+│   ├── 📂 fetchAPI  
+│   │   ├── 📄 index.js      # API veri çekme işlemleri  
+│   ├── 📂 serviceOperations  
+│   │   ├── 📄 index.jsx     # İş mantığı işlemleri  
+│── 📂 src                   # Ana kaynak kodları  
+│   ├── 📂 app               # Sayfa bileşenleri  
+│   │   ├── 📂 add-book  
+│   │   │   ├── 📄 page.js   # Yeni kitap ekleme sayfası  
+│   │   ├── 📂 api/books     # API için rota tanımlamaları  
+│   │   │   ├── 📂 [id]  
+│   │   │   │   ├── 📄 route.js  # Kitap ID’ye göre API işlemleri  
+│   │   │   ├── 📂 edit-book/[id]  
+│   │   │   │   ├── 📄 page.js  # Kitap düzenleme sayfası  
+│   │   │   ├── 📄 route.js     # API route dosyası  
+│   │   ├── 📂 books/[id]  
+│   │   │   ├── 📄 page.js      # Kitap detay sayfası  
+│   │   ├── 📄 favicon.ico      # Favicon dosyası  
+│   │   ├── 📄 globals.css      # Genel CSS stilleri  
+│   │   ├── 📄 layout.js        # Genel sayfa düzeni  
+│   │   ├── 📄 page.js          # Ana giriş sayfası  
+│   ├── 📂 components           # Bileşenler  
+│   │   ├── 📂 book-detail  
+│   │   │   ├── 📄 book-detail-header.jsx  # Kitap detay başlık bileşeni  
+│   │   │   ├── 📄 book-detail-image.jsx   # Kitap detay resim bileşeni  
+│   │   │   ├── 📄 book-detail-info.jsx    # Kitap detay bilgi bileşeni  
+│   │   │   ├── 📄 related-books.jsx       # Benzer kitaplar bileşeni  
+│   │   ├── 📂 ui  
+│   │   │   ├── 📄 add-book-button.jsx  # Kitap ekleme butonu  
+│   │   │   ├── 📄 book-actions.jsx     # Kitap işlemleri butonları  
+│   │   │   ├── 📄 book-card.jsx        # Kitap kartı bileşeni  
+│   │   │   ├── 📄 book-form.jsx        # Kitap form bileşeni  
+│   │   │   ├── 📄 book-list.jsx        # Kitap listesi bileşeni  
+│   │   │   ├── 📄 footer.jsx           # Sayfa alt bilgisi  
+│   │   │   ├── 📄 header.jsx           # Sayfa başlık bilgisi  
+│   │   │   ├── 📄 loading.jsx          # Yükleme ekranı  
+│   │   │   ├── 📄 theme-provider.jsx   # Tema sağlayıcı bileşeni  
+│   ├── 📂 lib                    # Yardımcı kütüphaneler  
+│   │   ├── 📂 prisma  
+│   │   ├── 📄 utils.js            # Yardımcı fonksiyonlar  
+│── 📂 utils                       
+│── 📄 .env                         
+│── 📄 .gitignore                   
+│── 📄 components.json               
+│── 📄 eslint.config.mjs            
+│── 📄 jsconfig.json                  
+│── 📄 next.config.mjs               
+│── 📄 package-lock.json             
+│── 📄 package.json                  
+│── 📄 postcss.config.mjs            
+│── 📄 Readme.md 
+│── 📄 tailwind.config.js
 ```
 
 
