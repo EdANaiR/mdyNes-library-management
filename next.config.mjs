@@ -1,10 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  experimental: {
-    // Your existing experimental options
-    serverComponentsExternalPackages: ["@prisma/client", "prisma"],
-  },
+  serverExternalPackages: ["@prisma/client", "prisma"],
   images: {
     domains: [
       "img.kitapyurdu.com",
